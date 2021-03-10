@@ -4,8 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-"discord.py" = "*"
 python-dotenv = "*"
+"discord.py" = {extras = ["voice"], version = "*"}
 
 [dev-packages]
 
