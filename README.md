@@ -5,5 +5,5 @@ DISCORD_BOT_TOKEN=""
 ```
 
 ### run local
-pipenv install
-pipenv run python3 main.py
+- pipenv install
+- pipenv run python3 main.py
