@@ -32,7 +32,8 @@ def get_client():
             await _youtube_live.comment_speaker()
 
         # TODO: みんないなくなったら自動で切断するようにしたい
-        if message.content == '!dis':
+        # !disだとRythmと被る
+        if message.content == '!benridis':
             _youtube_live = YoutubeLive(message)
             await _youtube_live.disconnect()
 
