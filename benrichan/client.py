@@ -34,7 +34,11 @@ def get_client():
         # TODO: みんないなくなったら自動で切断するようにしたい
         # !disだとRythmと被る
         if message.content == '!benridis':
-            _youtube_live = YoutubeLive(message)
-            await _youtube_live.disconnect()
+
+            if message.guild.voice_client is None:
+                await message.channel.send('ボイスチャンネルにいないよ！')
+                return
+
+            await message.guild.voice_client.disconnect()
 
     return client

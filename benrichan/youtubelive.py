@@ -13,12 +13,3 @@ class YoutubeLive():
         await self.message.author.voice.channel.connect()
         # for test
         # await self.message.channel.send('ボイスチャンネルに入ったよ！')
-
-    async def disconnect(self):
-        if self.message.guild.voice_client is None:
-            await self.message.channel.send('ボイスチャンネルにいないよ！')
-            return
-
-        await self.message.guild.voice_client.disconnect()
-        # for test
-        # await self.message.channel.send('ボイスチャンネルから出たよ！')
