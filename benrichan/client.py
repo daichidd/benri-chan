@@ -4,11 +4,11 @@ import re
 
 from benrichan.youtubelive import YoutubeLive
 
+YOUTUBE_API_KEY = settings.YOUTUBE_API_KEY
+YOUTUBE_LIVE_URL_BASE = r'https://www.youtube.com/watch\?v='
+
 
 def get_client():
-    YOUTUBE_API_KEY = settings.YOUTUBE_API_KEY
-    YOUTUBE_LIVE_URL_BASE = r'https://www.youtube.com/watch\?v='
-
     client = discord.Client()
 
     @client.event
@@ -28,7 +28,7 @@ def get_client():
         # youtube live comment speaker
         pattern = f'!benri\s{YOUTUBE_LIVE_URL_BASE}\w*'
         if re.match(pattern, message.content):
-            _youtube_live = YoutubeLive(message)
+            _youtube_live = YoutubeLive(message, get_video_id(message.content))
             await _youtube_live.comment_speaker()
 
         # TODO: みんないなくなったら自動で切断するようにしたい
@@ -42,3 +42,8 @@ def get_client():
             await message.guild.voice_client.disconnect()
 
     return client
+
+
+def get_video_id(url):
+    pos = url.find('=')
+    return url[pos + 1:]
