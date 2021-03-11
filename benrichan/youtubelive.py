@@ -1,3 +1,6 @@
+import requests
+import settings
+
 
 class YoutubeLive():
     def __init__(self, message):
@@ -12,10 +15,28 @@ class YoutubeLive():
 
         # benri-chan connect to voice channel
         await self.message.author.voice.channel.connect()
-        print(self.video_id)
+        chat_id = self.get_chat_id()
+        print('chat_id: ', chat_id)
         # for test
         # await self.message.channel.send('ボイスチャンネルに入ったよ！')
 
     def get_video_id(self, command):
         pos = command.find('=')
         return command[pos + 1:]
+
+    def get_chat_id(self):
+        api_url = 'https://www.googleapis.com/youtube/v3/videos'
+        params = {
+            'key': settings.YOUTUBE_API_KEY,
+            'id': self.video_id,
+            'part': 'liveStreamingDetails',
+        }
+        data = requests.get(api_url, params=params).json()
+
+        liveDetails = data['items'][0]['liveStreamingDetails']
+        if 'activeLiveChatId' in liveDetails.keys():
+            chat_id = liveDetails['activeLiveChatId']
+        else:
+            chat_id = None
+
+        return chat_id
