@@ -1,8 +1,8 @@
 
 class YoutubeLive():
-    def __init__(self, message, video_id):
+    def __init__(self, message):
         self.message = message
-        self.video_id = video_id
+        self.video_id = self.get_video_id(message.content)
 
     async def comment_speaker(self):
         # speaker is not in voice channel
@@ -15,3 +15,7 @@ class YoutubeLive():
         print(self.video_id)
         # for test
         # await self.message.channel.send('ボイスチャンネルに入ったよ！')
+
+    def get_video_id(self, command):
+        pos = command.find('=')
+        return command[pos + 1:]
